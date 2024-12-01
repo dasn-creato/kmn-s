@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f3f4f6;
+            flex-direction: column;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        label {
+            font-size: 14px;
+            text-align: left;
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 18px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #fafafa;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+            background-color: #fff;
+        }
+
+        button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* Loading Bar Styles */
+        #loading-bar {
+            width: 100%;
+            background-color: #ddd;
+            margin-top: 20px;
+            height: 20px;
+            display: none;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #progress {
+            height: 100%;
+            width: 0;
+            background-color: #4CAF50;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            line-height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="student-id">Student ID Number:</label>
+                <input type="text" id="student-id" name="student-id" placeholder="Enter Student ID" required>
+            </div>
+
+            <div class="form-group">
+                <label for="full-name">Full Name:</label>
+                <input type="text" id="full-name" name="full-name" placeholder="Enter Full Name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter Password" required>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <button onclick="initiateReset()">FSDS (Force System Data Storage Reset)</button>
+
+        <div id="loading-bar">
+            <div id="progress">0%</div>
+        </div>
+    </div>
+
+    <script>
+        // Save login data to LocalStorage on submit
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const studentID = document.getElementById('student-id').value;
+            const fullName = document.getElementById('full-name').value;
+            const password = document.getElementById('password').value;
+
+            const savedStudentID = localStorage.getItem('studentID');
+            const savedPassword = localStorage.getItem('password');
+
+            // Check if the entered details match the stored data
+            if (savedStudentID === studentID && savedPassword === password) {
+                alert('Login successful!');
+                window.location.href = 'mainpage.html'; // Redirect on success
+            } else if (!savedStudentID) {
+                // Store data if no user exists in LocalStorage
+                localStorage.setItem('studentID', studentID);
+                localStorage.setItem('fullName', fullName);
+                localStorage.setItem('password', password);
+                alert('Account created and logged in successfully!');
+                window.location.href = 'mainpage.html';
+            } else {
+                alert('Incorrect login details.');
+            }
+        });
+
+        // Function to handle FSDS with agreement and loading animation
+        function initiateReset() {
+            const agree = confirm("Do you agree to reset all saved data? This action is irreversible.");
+            if (agree) {
+                // Show loading bar
+                document.getElementById('loading-bar').style.display = 'block';
+                let progress = 0;
+                const loadingInterval = setInterval(() => {
+                    progress += 5;
+                    document.getElementById('progress').style.width = progress + '%';
+                    document.getElementById('progress').innerText = progress + '%';
+
+                    if (progress >= 100) {
+                        clearInterval(loadingInterval);
+                        localStorage.clear();
+                        alert("System data storage reset successful!");
+                        document.getElementById('loading-bar').style.display = 'none';
+                    }
+                }, 100); // Adjust speed of loading animation here
+            }
+        }
+    </script>
+</body>
+</html>
