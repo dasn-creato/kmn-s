@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    body {
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+      font-family: Arial, sans-serif;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      background-color: #333;
+      border-radius: 50%;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .button {
+      padding: 15px 30px;
+      font-size: 18px;
+      cursor: pointer;A
+      border: none;
+      border-radius: 50px;
+      width: 220px;
+      background-color: #fff;
+      color: #333;
+      text-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .button:hover {
+      background-color: #333;
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    .button:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo"></div>
+
+  <div class="button-container">
+    <button class="button">Administrator</button>
+    <a href="authform.html"><button class="button">Student</button></a>
+  </div>
+  
+</body>
+</html>
